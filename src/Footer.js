@@ -8,13 +8,13 @@ const Footer = (props) => {
   const { textStyle, backFooter } = styles;
   return (
     <View style={backFooter}>
-      <Text style={textStyle}>Copyright @ericwidhiantara</Text>
+      <Text style={textStyle}>Copyright @wandi</Text>
     </View>
   );
 };
 const styles = {
     backFooter: {
-      backgroundColor: '#29B6F6',
+      backgroundColor: '#EF6C00',
       justifyContent: 'center',
       alignItems: 'center',
       padding: 10,
