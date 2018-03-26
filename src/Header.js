@@ -14,17 +14,17 @@ const Header = (props) => {
 };
 const styles = {
     backFooter: {
-      backgroundColor: '#29B6F6',
+      backgroundColor: '#EF6C00',
       justifyContent: 'center',
       alignItems: 'center',
       padding: 10,
       paddingTop: 10,
       position: 'relative',
-      
+
     },
     textStyle: {
       fontSize: 18,
-      color: '#fff',
+      color: '#FFF3E0',
       textAlign: 'center'
     }
 }
