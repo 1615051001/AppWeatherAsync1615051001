@@ -61,7 +61,7 @@ constructor(props) {
     <View style={styles.containerMain}>
       <View style={styles.box2}>
 
-          <Text style={{ textAlign: 'center', paddingTop: 15, paddingBottom: 15,fontSize: 20 }}> Masukan Nama Kota </Text>
+          <Text style={{ textAlign: 'center', color: 'white', paddingTop: 15, paddingBottom: 15,fontSize: 20 }}> Masukan Nama Kota </Text>
           <TextInput
                 style={{ height: 40, color: 'white', padding: 9}}
               placeholder=" Masukan Nama kota "
@@ -71,7 +71,7 @@ constructor(props) {
             <Button
               onPress={() => this.getWeather()}
               title="Cari"
-              color="black"
+              color="##F57C00"
 
               accessibilityLabel="Klik untuk melihat cuaca"
             />
@@ -159,22 +159,21 @@ constructor(props) {
 }
 const styles = StyleSheet.create({
   containerMain: {
-    backgroundColor: '#BBDEFB',
+    backgroundColor: '#FFF3E0',
     flex: 1,
     flexDirection: 'column'
   },
   box1: {
     flex: 0.7,
-    backgroundColor: 'blue',
+    backgroundColor: '#EF6C00',
   },
   box2: {
     flex: 0.4,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#F57C00',
     marginLeft: 10,
     marginRight: 10,
     flexDirection: 'column',
     justifyContent: 'space-around',
-    alignItems: 'center'
   },
   box3: {
     flex: 0.5,
@@ -188,7 +187,7 @@ const styles = StyleSheet.create({
   },
   box4: {
     flex: 0.3,
-    backgroundColor: '#90CAF9',
+    backgroundColor: '#FB8C00',
     //marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
