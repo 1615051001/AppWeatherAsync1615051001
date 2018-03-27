@@ -1,21 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
 
 const windIcon = require('./img/wind.png');
 const tempIcon = require('./img/temp.png');
 const mainIcon = require('./img/main.png');
-const levelIcon = require('./img/sea.png');
-
-//import Loader from './loading/Loader';
+const seaIcon = require('./img/sea.png');
+const groundIcon = require('./img/ground.png');
+const sunriseIcon = require('./img/sunrise.png');
+const sunsetIcon = require('./img/sunset.png');
+const preasureIcon = require('./img/preasure.png');
+const humidityIcon = require('./img/humidity.png');
 
 export default class Weather extends React.Component {
 constructor(props) {
-    super(props);
+  super(props);
     this.state = {
       city: '',
       forecast: {
-        main: '',
-        description: '',
+        main: '-',
+        description: '-',
         temp: 0,
         sunrise: 0,
         sunset: 0,
@@ -24,20 +27,18 @@ constructor(props) {
         sea_level: 0,
         grnd_level: 0,
         speed: 0,
-        //loading: false,
       }
     };
-  }
-  async getWeather() {
-
-  try {
-    let response = await fetch(
-      'http://api.openweathermap.org/data/2.5/weather?q='+ this.state.city + '&appid=a9e05c354509dcd6e7b4a9fb25e1b2d1&units=metric'
-    );
-
-    let responseJson = await response.json();
-    return this.setState({
-      forecast : {
+}
+getWeather= () => {
+  let url = 'http://api.openweathermap.org/data/2.5/weather?q=' + this.state.city +
+  '&appid=a9e05c354509dcd6e7b4a9fb25e1b2d1&units=metric';
+  fetch(url)
+  .then((response) => response.json())
+  .then((responseJson) => {
+    console.log(responseJson);
+    this.setState({
+      forecast: {
         main: responseJson.weather[0].main,
         description: responseJson.weather[0].description,
         temp: responseJson.main.temp,
@@ -49,136 +50,155 @@ constructor(props) {
         grnd_level: responseJson.main.grnd_level,
         speed: responseJson.wind.speed
       }
-    });
-  } catch (error) {
-    console.error(error);
-  }
+        });
+      }
+    );
 }
-
-
   render() {
     return (
     <View style={styles.containerMain}>
       <View style={styles.box2}>
-
-          <Text style={{ textAlign: 'center', color: 'white', paddingTop: 15, paddingBottom: 15,fontSize: 20 }}> Masukan Nama Kota </Text>
+          <Text style={styles.title}>Masukan Nama Kota</Text>
           <TextInput
-                style={{ height: 40, color: 'white', padding: 9}}
+              style={styles.textInput}
               placeholder=" Masukan Nama kota "
-              onChangeText={(city) => this.setState({ city })}
-            />
-
+              selectionColor='white'
+              underlineColorAndroid='white'
+              onChangeText={(city) => this.setState({ city })}/>
             <Button
-              onPress={() => this.getWeather()}
-              title="Cari"
-              color="##F57C00"
-
-              accessibilityLabel="Klik untuk melihat cuaca"
-            />
-
+            style={{ paddingTop: 10 }}
+            onPress={() => this.getWeather()}
+            title="CARI"
+            color="#F57C00"
+            accessibilityLabel="Klik untuk melihat cuaca"/>
       </View>
 
+    <View style={styles.weather}>
       <View style={styles.box4}>
         <View style={styles.button}>
-          <Text> City : { this.state.city} </Text>
+          <View style={styles.iconContainer}>
+            <Image source={windIcon} style={styles.icon} />
+          </View>
+          <Text> Wind Speed : { this.state.forecast.speed}</Text>
         </View>
+
         <View style={styles.button}>
-        <View style={styles.iconContainer}>
-          <Image source={tempIcon} style={styles.icon} />
-       </View>
+          <View style={styles.iconContainer}>
+            <Image source={tempIcon} style={styles.icon} />
+          </View>
           <Text> Temp : { this.state.forecast.temp} </Text>
         </View>
       </View>
+
       <View style={styles.box4}>
         <View style={styles.button}>
-        <View style={styles.iconContainer}>
-          <Image source={mainIcon} style={styles.icon} />
-       </View>
+          <View style={styles.iconContainer}>
+            <Image source={mainIcon} style={styles.icon} />
+          </View>
           <Text> Main : { this.state.forecast.main} </Text>
         </View>
+
         <View style={styles.button}>
-        <View style={styles.iconContainer}>
-          <Image source={mainIcon} style={styles.icon} />
-       </View>
+          <View style={styles.iconContainer}>
+            <Image source={mainIcon} style={styles.icon} />
+          </View>
           <Text> Main Desc : { this.state.forecast.description} </Text>
         </View>
       </View>
-      <View style={styles.box4}>
-        <View style={styles.button}>
+
+    <View style={styles.box4}>
+      <View style={styles.button}>
         <View style={styles.iconContainer}>
-          <Image source={mainIcon} style={styles.icon} />
-       </View>
-          <Text> Sunrise : { this.state.forecast.sunrise} </Text>
+          <Image source={sunriseIcon} style={styles.icon} />
         </View>
-        <View style={styles.button}>
-        <View style={styles.iconContainer}>
-          <Image source={mainIcon} style={styles.icon} />
-       </View>
-          <Text> Sunset : { this.state.forecast.sunset} </Text>
-        </View>
+        <Text> Sunrise : { this.state.forecast.sunrise} </Text>
       </View>
-      <View style={styles.box4}>
-        <View style={styles.button}>
+
+      <View style={styles.button}>
         <View style={styles.iconContainer}>
-          <Image source={levelIcon} style={styles.icon} />
-       </View>
-          <Text> Pressure : { this.state.forecast.pressure} </Text>
+          <Image source={sunsetIcon} style={styles.icon} />
         </View>
-        <View style={styles.button}>
-        <View style={styles.iconContainer}>
-          <Image source={levelIcon} style={styles.icon} />
-       </View>
-          <Text> Humidity : { this.state.forecast.humidity} </Text>
-        </View>
+        <Text> Sunset : { this.state.forecast.sunset} </Text>
       </View>
-      <View style={styles.box4}>
-        <View style={styles.button}>
+    </View>
+
+    <View style={styles.box4}>
+      <View style={styles.button}>
         <View style={styles.iconContainer}>
-          <Image source={levelIcon} style={styles.icon} />
-       </View>
-          <Text> Sea Level : { this.state.forecast.sea_level} </Text>
+          <Image source={preasureIcon} style={styles.icon} />
         </View>
-        <View style={styles.button}>
-        <View style={styles.iconContainer}>
-          <Image source={levelIcon} style={styles.icon} />
-       </View>
-          <Text> Ground Level : { this.state.forecast.grnd_level} </Text>
-        </View>
+        <Text> Pressure : { this.state.forecast.pressure} </Text>
       </View>
-      <View style={styles.box4}>
-        <View style={styles.button}>
+
+      <View style={styles.button}>
         <View style={styles.iconContainer}>
-          <Image source={windIcon} style={styles.icon} />
-       </View>
-          <Text> Wind Speed : { this.state.forecast.speed} </Text>
+          <Image source={humidityIcon} style={styles.icon} />
         </View>
+        <Text> Humidity : { this.state.forecast.humidity} </Text>
       </View>
-</View>
+    </View>
+
+    <View style={styles.box4}>
+      <View style={styles.button}>
+        <View style={styles.iconContainer}>
+          <Image source={seaIcon} style={styles.icon} />
+        </View>
+        <Text> Sea Level : { this.state.forecast.sea_level} </Text>
+      </View>
+
+      <View style={styles.button}>
+        <View style={styles.iconContainer}>
+          <Image source={groundIcon} style={styles.icon} />
+        </View>
+        <Text> Ground Level :{ this.state.forecast.grnd_level} </Text>
+      </View>
+    </View>
+  </View>
+
+
+
+
+  </View>
     );
   }
 }
 const styles = StyleSheet.create({
+  textInput:{
+    height: 40,
+    width: 250,
+    color: '#FFF3E0',
+    textAlign: 'center',
+    fontSize: 15,
+  },
+  title: {
+    textAlign: 'center',
+    paddingTop: 15,
+    fontSize: 20,
+    color: '#FFFFFF'
+  },
+
   containerMain: {
     backgroundColor: '#FFF3E0',
-    flex: 1,
-    flexDirection: 'column'
+    flex: 5,
+    flexDirection: 'column',
+    padding: 10,
   },
   box1: {
-    flex: 0.7,
-    backgroundColor: '#EF6C00',
+    flex: 1,
+    backgroundColor: '#E65100',
   },
   box2: {
-    flex: 0.4,
+    flex: 1,
     backgroundColor: '#F57C00',
     marginLeft: 10,
     marginRight: 10,
     flexDirection: 'column',
     justifyContent: 'space-around',
+    alignItems: 'center'
   },
   box3: {
-    flex: 0.5,
-    backgroundColor: '#90CAF9',
-    //marginTop: 10,
+    flex: 1,
+    backgroundColor: '#FFA726',
     marginLeft: 10,
     marginRight: 10,
     justifyContent: 'space-around',
@@ -186,37 +206,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   box4: {
-    flex: 0.3,
-    backgroundColor: '#FB8C00',
-    //marginTop: 10,
+    flex: 1,
+    backgroundColor: '#FFA726',
     marginLeft: 10,
     marginRight: 10,
     justifyContent: 'space-around',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+  },
+  weather:{
+    flex: 4,
+    borderRadius: 3,
   },
   box5: {
     flex: 0.7,
-    backgroundColor: '#1565C0',
-    margin: 10
+    backgroundColor: '#FF1493',
   },
   button: {
-    width: 140,
-    height: 40,
+    width: 150,
+    height: 50,
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'white',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderRadius: 3,
   },
   iconContainer: {
     alignItems: 'center',
-    backgroundColor: '#feb401',
+    backgroundColor: '#F57C00',
     borderColor: '#feaf12',
-    //borderRadius: 15,
-    borderWidth: 1,
+    borderTopLeftRadius: 3,
+    borderBottomLeftRadius: 3,
     justifyContent: 'center',
-    height: 40,
-    width: 30,
+    height: 50,
+    width: 50,
   },
   icon: {
     tintColor: '#fff',
@@ -224,3 +247,4 @@ const styles = StyleSheet.create({
     width: 20,
   }
 });
+
